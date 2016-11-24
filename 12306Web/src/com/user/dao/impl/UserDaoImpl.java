@@ -38,7 +38,13 @@ public class UserDaoImpl implements UserDao {
 	public UserDaoImpl(Connection conn) {
 		this.conn = conn;
 	}
-
+	/**
+	 * 增加用户
+	 * 
+	 * @param user
+	 *            用户对象
+	 * @throws SQLException
+	 */
 	@Override
 	public int save(User user) throws SQLException {
 		//SQL语句
@@ -72,7 +78,13 @@ public class UserDaoImpl implements UserDao {
 		}
 		return row;
 	}
-
+	/**
+	 * 删除用户(采用IN方式完成)
+	 * 
+	 * @param userIdList
+	 *            用户ID的集合
+	 * @throws SQLException
+	 */
 	@Override
 	public boolean deleteUsers(int[] userIdList) throws SQLException {
 		// 构建所有删除用户字符串，形如(100, 101)
@@ -173,7 +185,12 @@ public class UserDaoImpl implements UserDao {
 		}
 		return user;
 	}
-
+	/**
+	 * 通过用户信息查询用户
+	 * @param 用户信息，逐项信息查询，信息为空说明该查询条件为空
+	 * @return 用户信息，若未查到符合条件用户则返回对象为null
+	 * @throws SQLException
+	 */
 	@Override
 	public User findUser(User one) throws SQLException {
 		// SQL语句
@@ -338,7 +355,12 @@ public class UserDaoImpl implements UserDao {
 		}
 		return user;
 	}
-
+	/**
+	 * 删除用户(采用调用存储过程完成)
+	 * @param userIdList
+	 * @return 操作是否成功
+	 * @throws SQLException
+	 */
 	@Override
 	public boolean deleteUsersProcedure(int[] userIdList) throws SQLException {
 		// 构建所有删除用户字符串，形如(100, 101)
@@ -367,7 +389,12 @@ public class UserDaoImpl implements UserDao {
 		}
 		return row;
 	}
-
+	/**
+	 * 更新用户信息
+	 * @param one，需要更新的用户信息对象
+	 * @return 执行是否成功
+	 * @throws SQLException
+	 */
 	@Override
 	public boolean updateUser(User one) throws SQLException {
 		
@@ -401,7 +428,7 @@ public class UserDaoImpl implements UserDao {
 			update_sql.append(", rule='"+rule+"'");
 			tag = true;
 		}
-		//查询条件realname字段，模糊查询
+		//
 		String realname = one.getRealname();
 		if(realname!=null && !realname.isEmpty()){
 			update_sql.append(", realname='"+realname+"'");
@@ -490,6 +517,12 @@ public class UserDaoImpl implements UserDao {
 		}
 		return tag;
 	}
+	/**
+	 * 获取用户列表最大行数
+	 * @param one，查询条件
+	 * @return 列表最大行数
+	 * @throws SQLException
+	 */
 	@Override
 	public int getUserListRowCount(User one) throws SQLException {
 		int rowCount = 0;
@@ -592,7 +625,13 @@ public class UserDaoImpl implements UserDao {
 		
 		return rowCount;
 	}
-	
+	/**
+	 * 获取用户列表最大页数
+	 * @param pageSize，每页显示信息条数
+	 * @param one，查询条件
+	 * @return 列表最大页数
+	 * @throws SQLException
+	 */
 	@Override
 	public int getUserListPageCount(int pageSize, User one) throws SQLException {
 		int res = 0;
@@ -606,7 +645,14 @@ public class UserDaoImpl implements UserDao {
 		
 		return res;
 	}
-
+	/**
+	 * 获取指定页用户信息列表，通过分页SQL语句实现
+	 * @param pageSize，每页显示信息条数
+	 * @param rowNum，需要获取的页数
+	 * @param one，查询条件
+	 * @return 用户信息列表，List[User]，若无满足条件则列表为空
+	 * @throws SQLException
+	 */
 	@Override
 	public List<User> getUserList(int pageSize, int rowNum, User one)
 			throws SQLException {
@@ -755,7 +801,14 @@ public class UserDaoImpl implements UserDao {
 		}
 		return list;
 	}
-
+	/**
+	 * 获取指定页用户信息列表，通过分析结果集ResultSet对象实现
+	 * @param pageSize，每页显示信息条数
+	 * @param pageNum，需要获取的页数
+	 * @param one，需要获取的页数
+	 * @return 用户信息列表，List[User]，若无满足条件则列表为空
+	 * @throws SQLException
+	 */
 	@Override
 	public List<User> getUserListRS(int pageSize, int pageNum, User one)
 			throws SQLException {
@@ -907,6 +960,10 @@ public class UserDaoImpl implements UserDao {
 		}
 		return list;
 	}
+	/**
+	 * 统计Ip地址
+	 * @throws SQLException
+	 */
 	public List<IpAddress> getIpList() throws SQLException {
 		// SQL语句
 		String sql = "select nvl(LOGIN_IP, '0.0.0.0') as ip, count(nvl(LOGIN_IP, '0.0.0.0')) as cnt from t_user group by LOGIN_IP";
