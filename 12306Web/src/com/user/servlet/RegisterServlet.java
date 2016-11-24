@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.user.po.CertType;
-import com.util.Md5Utils;
-import com.util.TextUtils;
 import com.user.po.City;
 import com.user.po.User;
 import com.user.po.UserType;
 import com.user.service.UserService;
+import com.util.Md5Utils;
+import com.util.TextUtils;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -27,8 +27,8 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
@@ -36,11 +36,11 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		
+
 		// 取得请求参数
 		User user = new User();
 		populate(request, user);
@@ -86,8 +86,7 @@ public class RegisterServlet extends HttpServlet {
 		String errorMsg = null;
 		if (TextUtils.isEmpty(user.getUsername())) {
 			errorMsg = "请输入用户名";
-		} else if (user.getUsername().length() < 6
-				|| user.getUsername().length() > 30) {
+		} else if (user.getUsername().length() < 6 || user.getUsername().length() > 30) {
 			errorMsg = "用户名长度在6到30位之间";
 		} else if (!user.getUsername().matches("[a-zA-Z0-9_]{6,30}")) {
 			errorMsg = "用户名只能包含由字母、数字或“_”";
@@ -103,7 +102,7 @@ public class RegisterServlet extends HttpServlet {
 			errorMsg = "请输入出生日期";
 		} else if (user.getCity().getCityId() == "") {
 			errorMsg = "请选择城市";
-		} 
+		}
 		return errorMsg;
 	}
 
@@ -134,9 +133,9 @@ public class RegisterServlet extends HttpServlet {
 
 		// City
 		City city = new City();
-		if(cityId == null || cityId.equals("城市")){
+		if (cityId == null || cityId.equals("城市")) {
 			city.setCityId("");
-		}else{
+		} else {
 			city.setCityId(cityId);
 		}
 		user.setCity(city);
