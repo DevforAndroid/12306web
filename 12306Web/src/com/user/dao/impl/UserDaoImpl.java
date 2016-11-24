@@ -92,7 +92,16 @@ public class UserDaoImpl implements UserDao {
 		}
 		return row;
 	}
-
+	/**
+	 * 通过用户名、密码验证登录用户信息(Lazy Mode)
+	 * 
+	 * @param username
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @return user 用户信息，若用户名、密码不相符返回对象为null
+	 * @throws SQLException
+	 */
 	@Override
 	public User login(String username, String password) throws SQLException {
 		// SQL语句
